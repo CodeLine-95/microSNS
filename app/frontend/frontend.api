@@ -1,0 +1,76 @@
+syntax = "v1"
+
+info (
+	title: "mirco_sns 微社区"
+	author: "jobhandsome"
+	version: "1.0.0"
+)
+
+// 登录路由
+service frontend-api{
+	@doc (
+		summary: "用户注册"
+	)
+	@handler Register
+	post /user/register (RegisterReq) returns (CommonResply)
+	
+	@doc (
+		summary: "用户登录"
+	)
+	@handler Login
+	post /user/login (LoginReq) returns (CommonResply)
+}
+
+// 分类路由
+service frontend-api{
+	@doc (
+		summary: "分类类表"
+	)
+	@handler CateList
+	post /cate/lists (CateListsReq) returns (CateListsResply)
+}
+
+// 定义请求参数和返回值
+type (
+	CommonResply {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+	}
+
+	RegisterReq {
+		Name string `json:"name"` // 用户名
+		Pass string `json:"pass"` // 用户密码，加密
+	}
+
+	LoginReq {
+		Name string `json:"name"` // 用户名
+		Pass string `json:"pass"` // 用户密码
+	}
+
+	CateListsReq {
+		Page     int `json:"page,optional"`
+		PageSize int `json:"pageSize,optional"`
+	}
+
+	CateListsResply {
+		CommonResply
+		TotalCount int64           `json:"totalCount"`
+		CurrCount  int             `json:"currCount"`
+		Data       []CateListsItem `json:"data"`
+	}
+
+	CateListsItem {
+		Id        uint32 `json:"id"`
+		Name      string `json:"name"`       // 名称
+		Alias     string `json:"alias"`      // 别名
+		Desc      string `json:"desc"`       // 介绍
+		Pid       uint8  `json:"pid"`        // 上级节点
+		Level     uint8  `json:"level"`      // 层级：0一级(默认)
+		Icons     string `json:"icons"`      // 图标
+		Sorts     uint32 `json:"sorts"`      // 排序
+		State     uint8  `json:"state"`      // 状态：0-关闭/1-开启
+		IsDelete  uint8  `json:"is_delete"`  // 软删除
+		CreatedAt string `json:"created_at"` // 创建时间
+		UpdatedAt string `json:"updated_at"` // 更新时间
+	}
+)
