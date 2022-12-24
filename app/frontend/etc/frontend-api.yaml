@@ -1,3 +1,21 @@
 Name: frontend-api
 Host: 0.0.0.0
 Port: 9000
+
+SecretKey: C8xHnG6s
+# mysql配置
+Mysql:
+  Host: 127.0.0.1:3346
+  User: root
+  Pass: !!str 123456
+  Data: micro_sns
+  Charset: utf8mb4
+
+# redis 配置
+Redis:
+  Addr: 127.0.0.1:6377
+  Pass: !!str 123456
+
+Auth:
+  Secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+  Expire: 64800
