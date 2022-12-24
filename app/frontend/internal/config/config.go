@@ -4,7 +4,8 @@ import "github.com/zeromicro/go-zero/rest"
 
 type Config struct {
 	rest.RestConf
-	Mysql struct {
+	SecretKey string
+	Mysql     struct {
 		Host    string
 		User    string
 		Pass    string

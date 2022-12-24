@@ -18,7 +18,7 @@ import (
 func InitMysql(DataSource string) *gorm.DB {
 	engine, err := gorm.Open(mysql.Open(DataSource))
 	if err != nil {
-		log.Printf("Xorm New Engine Error:%v", err)
+		log.Printf("Gorm New Engine Error:%v", err)
 		return nil
 	}
 	return engine

@@ -2,13 +2,13 @@ Name: frontend-api
 Host: 0.0.0.0
 Port: 9000
 
-SecretKey: C8xHnG6s
+SecretKey: oingtx47safd756s
 # mysql配置
 Mysql:
   Host: 127.0.0.1:3346
-  User: root
+  User: mrico_sns
   Pass: !!str 123456
-  Data: micro_sns
+  Data: mrico_sns
   Charset: utf8mb4
 
 # redis 配置
