@@ -2,6 +2,10 @@ package logic
 
 import (
 	"context"
+	"github.com/jobhandsome/microSNS/model"
+	"github.com/jobhandsome/microSNS/pkg/Errorx"
+	"github.com/jobhandsome/microSNS/pkg/Paginate"
+	"net/http"
 
 	"github.com/jobhandsome/microSNS/app/frontend/internal/svc"
 	"github.com/jobhandsome/microSNS/app/frontend/internal/types"
@@ -24,7 +28,25 @@ func NewCateListLogic(ctx context.Context, svcCtx *svc.ServiceContext) CateListL
 }
 
 func (l *CateListLogic) CateList(req types.CateListsReq) (resp *types.CateListsResply, err error) {
-	// todo: add your logic here and delete this line
 
-	return
+	var SnsCateM model.SnsCate
+
+	var SnsCateData []types.CateListsItem
+
+	var TotalCount int64 = 0
+
+	Where := "1=1 and is_delete = 0"
+
+	l.svcCtx.Engine.Table(SnsCateM.TableName()).Count(&TotalCount)
+
+	result := l.svcCtx.Engine.Table(SnsCateM.TableName()).Where(Where).Scopes(Paginate.Paginate(req.Page, req.PageSize)).Order("id desc").Find(&SnsCateData)
+
+	if result.Error != nil {
+		return nil, Errorx.NewDefaultError("系统异常")
+	}
+
+	return &types.CateListsResply{types.CommonResply{
+		Code:    http.StatusOK,
+		Message: "获取成功",
+	}, TotalCount, len(SnsCateData), SnsCateData}, nil
 }
