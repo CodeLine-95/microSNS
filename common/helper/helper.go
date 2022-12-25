@@ -15,6 +15,7 @@ import (
 	"math/rand"
 	"net/smtp"
 	"os"
+	"regexp"
 	"time"
 )
 
@@ -67,4 +68,18 @@ func MailSendCode(mail, code string) error {
 		return err
 	}
 	return nil
+}
+
+func CheckPassword(password string) (b bool) {
+	if ok, _ := regexp.MatchString("^[A-Za-z0-9][A-Za-z0-9_-]{6,16}$", password); !ok {
+		return false
+	}
+	return true
+}
+
+func CheckUsername(username string) (b bool) {
+	if ok, _ := regexp.MatchString("^[A-Za-z0-9][A-Za-z0-9_-]*$", username); !ok {
+		return false
+	}
+	return true
 }

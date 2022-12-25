@@ -6,6 +6,7 @@ import (
 	"github.com/jobhandsome/microSNS/app/frontend/internal/config"
 	"github.com/jobhandsome/microSNS/common/define"
 	"github.com/jobhandsome/microSNS/model"
+	"github.com/jobhandsome/microSNS/pkg/LocalTime"
 	"gorm.io/gorm"
 	"net/url"
 )
@@ -14,6 +15,7 @@ type ServiceContext struct {
 	Config config.Config
 	Engine *gorm.DB
 	RDB    *redis.Client
+	T      *LocalTime.LocalTime
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -25,5 +27,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Config: c,
 		Engine: model.InitMysql(DataSource),
 		RDB:    model.InitRedis(c.Redis.Addr, c.Redis.Pass),
+		T:      &LocalTime.LocalTime{},
 	}
 }
