@@ -93,7 +93,7 @@ func (m *SnsIntegralLogs) TableName() string {
 type SnsTopics struct {
 	Id          uint   `gorm:"column:id;type:int(11) unsigned;primary_key;AUTO_INCREMENT" json:"id"`
 	Title       string `gorm:"column:title;type:varchar(255);comment:标题;NOT NULL" json:"title"`
-	Tags        string `gorm:"column:tags;type:json;comment:标签;NOT NULL" json:"tags"`
+	Tags        string `gorm:"column:tags;type:varchar(255);comment:标签;NOT NULL" json:"tags"`
 	State       uint   `gorm:"column:state;type:tinyint(4) unsigned;default:0;comment:状态：0-草稿/1-发布;NOT NULL" json:"state"`
 	Type        uint   `gorm:"column:type;type:tinyint(4) unsigned;default:0;comment:类型：0-默认/1-精华/2-置顶;NOT NULL" json:"type"`
 	Content     string `gorm:"column:content;type:longtext;comment:内容;NOT NULL" json:"content"`

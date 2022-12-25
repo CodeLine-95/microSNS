@@ -32,6 +32,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/cate/lists",
 				Handler: CateListHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/topic/lists",
+				Handler: TopicListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/topic/create",
+				Handler: TopicCreateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/topic/delete",
+				Handler: TopicDeleteHandler(serverCtx),
+			},
 		},
 	)
 }

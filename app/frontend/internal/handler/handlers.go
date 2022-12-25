@@ -63,3 +63,57 @@ func CateListHandler(ctx *svc.ServiceContext) http.HandlerFunc {
 		}
 	}
 }
+
+func TopicCreateHandler(ctx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.TopicCreateReq
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.Error(w, err)
+			return
+		}
+
+		l := logic.NewTopicCreateLogic(r.Context(), ctx)
+		resp, err := l.TopicCreate(req)
+		if err != nil {
+			httpx.Error(w, err)
+		} else {
+			httpx.OkJson(w, resp)
+		}
+	}
+}
+
+func TopicListHandler(ctx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.TopicListsReq
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.Error(w, err)
+			return
+		}
+
+		l := logic.NewTopicListLogic(r.Context(), ctx)
+		resp, err := l.TopicList(req)
+		if err != nil {
+			httpx.Error(w, err)
+		} else {
+			httpx.OkJson(w, resp)
+		}
+	}
+}
+
+func TopicDeleteHandler(ctx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.TopicDeleteReq
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.Error(w, err)
+			return
+		}
+
+		l := logic.NewTopicDeleteLogic(r.Context(), ctx)
+		resp, err := l.TopicDelete(req)
+		if err != nil {
+			httpx.Error(w, err)
+		} else {
+			httpx.OkJson(w, resp)
+		}
+	}
+}

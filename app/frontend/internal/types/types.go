@@ -42,3 +42,41 @@ type CateListsItem struct {
 	CreatedAt string `json:"created_at"` // 创建时间
 	UpdatedAt string `json:"updated_at"` // 更新时间
 }
+
+type TopicCreateReq struct {
+	CateId    uint32 `json:"cate_id"`    // 所属板块ID
+	Title     string `json:"title"`      // 标题
+	Tags      string `json:"tags"`       // 标签
+	Content   string `json:"content"`    // 内容
+	MdContent string `json:"md_content"` // markdown内容
+}
+
+type TopicListsReq struct {
+	Page     int `json:"page,optional"`
+	PageSize int `json:"pageSize,optional"`
+}
+
+type TopicListsResply struct {
+	CommonResply
+	TotalCount int64             `json:"totalCount"`
+	CurrCount  int               `json:"currCount"`
+	Data       []TopicCreateItem `json:"data"`
+}
+
+type TopicDeleteReq struct {
+	TopicId uint32 `json:"topic_id"`
+}
+
+type TopicCreateItem struct {
+	Id          uint32 `json:"id"`
+	Title       string `json:"title"`         // 标题
+	Tags        string `json:"tags"`          // 标签
+	State       uint8  `json:"state"`         // 状态：0-草稿/1-发布
+	Type        uint8  `json:"type"`          // 类型：0-默认/1-精华/2-置顶
+	Content     string `json:"content"`       // 内容
+	MdContent   string `json:"md_content"`    // markdown内容
+	IsDelete    uint8  `json:"is_delete"`     // 软删除
+	LastReplyAt string `json:"last_reply_at"` // 最后回复时间
+	CreatedAt   string `json:"created_at"`    // 创建时间
+	UpdatedAt   string `json:"updated_at"`    // 更新时间
+}

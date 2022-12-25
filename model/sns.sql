@@ -76,7 +76,7 @@ CREATE TABLE `sns_integral_logs`  (
 CREATE TABLE `sns_topics`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '标题',
-  `tags` json NOT NULL COMMENT '标签',
+  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '标签',
   `state` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态：0-草稿/1-发布',
   `type` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '类型：0-默认/1-精华/2-置顶',
   `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
