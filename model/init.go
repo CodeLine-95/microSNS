@@ -15,11 +15,14 @@ import (
 	"log"
 )
 
-func InitMysql(DataSource string) *gorm.DB {
+func InitMysql(DataSource string, Debug bool) *gorm.DB {
 	engine, err := gorm.Open(mysql.Open(DataSource))
 	if err != nil {
 		log.Printf("Gorm New Engine Error:%v", err)
 		return nil
+	}
+	if Debug {
+		return engine.Debug()
 	}
 	return engine
 }

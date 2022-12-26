@@ -31,7 +31,7 @@ func (l *CateListLogic) CateList(req types.CateListsReq) (resp *types.CateListsR
 
 	var SnsCateM model.SnsCate
 
-	var SnsCateData []types.CateListsItem
+	var SnsCateData []types.CateItem
 
 	var TotalCount int64 = 0
 

@@ -10,6 +10,7 @@ Mysql:
   Pass: !!str 123456
   Data: mrico_sns
   Charset: utf8mb4
+  Debug: true
 
 # redis 配置
 Redis:

@@ -11,6 +11,7 @@ type Config struct {
 		Pass    string
 		Data    string
 		Charset string
+		Debug   bool
 	}
 	Redis struct {
 		Addr string

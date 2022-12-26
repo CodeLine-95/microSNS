@@ -23,12 +23,12 @@ type CateListsReq struct {
 
 type CateListsResply struct {
 	CommonResply
-	TotalCount int64           `json:"totalCount"`
-	CurrCount  int             `json:"currCount"`
-	Data       []CateListsItem `json:"data"`
+	TotalCount int64      `json:"totalCount"`
+	CurrCount  int        `json:"currCount"`
+	Data       []CateItem `json:"data"`
 }
 
-type CateListsItem struct {
+type CateItem struct {
 	Id        uint32 `json:"id"`
 	Name      string `json:"name"`       // 名称
 	Alias     string `json:"alias"`      // 别名
@@ -58,17 +58,18 @@ type TopicListsReq struct {
 
 type TopicListsResply struct {
 	CommonResply
-	TotalCount int64             `json:"totalCount"`
-	CurrCount  int               `json:"currCount"`
-	Data       []TopicCreateItem `json:"data"`
+	TotalCount int64       `json:"totalCount"`
+	CurrCount  int         `json:"currCount"`
+	Data       []TopicItem `json:"data"`
 }
 
 type TopicDeleteReq struct {
 	TopicId uint32 `json:"topic_id"`
 }
 
-type TopicCreateItem struct {
+type TopicItem struct {
 	Id          uint32 `json:"id"`
+	CateId      uint   `json:"cate_id"`       // 版块ID
 	Title       string `json:"title"`         // 标题
 	Tags        string `json:"tags"`          // 标签
 	State       uint8  `json:"state"`         // 状态：0-草稿/1-发布
