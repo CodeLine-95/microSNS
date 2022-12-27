@@ -2,6 +2,9 @@ package logic
 
 import (
 	"context"
+	"github.com/jobhandsome/microSNS/model"
+	"github.com/jobhandsome/microSNS/pkg/Errorx"
+	"net/http"
 
 	"github.com/jobhandsome/microSNS/app/frontend/internal/svc"
 	"github.com/jobhandsome/microSNS/app/frontend/internal/types"
@@ -23,8 +26,24 @@ func NewTopicDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) TopicD
 	}
 }
 
-func (l *TopicDeleteLogic) TopicDelete(req types.TopicDeleteReq) (resp *types.CommonResply, err error) {
-	// todo: add your logic here and delete this line
+func (l *TopicDeleteLogic) TopicDelete(req types.TopicItemReq) (resp *types.CommonResply, err error) {
 
-	return
+	var SnsTopic model.SnsTopics
+
+	result := l.svcCtx.Engine.Table(SnsTopic.TableName()).Where("id = ?", req.TopicId).Updates(map[string]interface{}{
+		"is_delete":  1,
+		"deleted_at": l.svcCtx.T.String(),
+	})
+
+	if result.Error != nil {
+		return nil, Errorx.NewDefaultError(result.Error.Error())
+	}
+
+	if result.RowsAffected == 0 {
+		return nil, Errorx.NewDefaultError("删除失败")
+	}
+	return &types.CommonResply{
+		Code:    http.StatusOK,
+		Message: "删除成功",
+	}, nil
 }
