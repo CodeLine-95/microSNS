@@ -37,9 +37,9 @@ func (l *TopicListLogic) TopicList(req types.TopicListsReq) (resp *types.TopicLi
 
 	Where := "1=1 and " + SnsTopicM.TableName() + ".is_delete = 0"
 
-	l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SnsTopicM.TableName() + ".*," + SnsTopicUserM.TableName() + ".cate_id").Joins("left join " + SnsTopicUserM.TableName() + " on " + SnsTopicM.TableName() + ".id = " + SnsTopicUserM.TableName() + ".topics_id").Count(&TotalCount)
+	l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SnsTopicM.TableName() + ".*," + SnsTopicUserM.TableName() + ".cate_id," + SnsTopicUserM.TableName() + ".user_id").Joins("left join " + SnsTopicUserM.TableName() + " on " + SnsTopicM.TableName() + ".id = " + SnsTopicUserM.TableName() + ".topics_id").Count(&TotalCount)
 
-	result := l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SnsTopicM.TableName() + ".*," + SnsTopicUserM.TableName() + ".cate_id").Joins("left join " + SnsTopicUserM.TableName() + " on " + SnsTopicM.TableName() + ".id = " + SnsTopicUserM.TableName() + ".topics_id").Where(Where).Scopes(Paginate.Paginate(req.Page, req.PageSize)).Order(SnsTopicM.TableName() + ".id desc").Find(&SnsTopicData)
+	result := l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SnsTopicM.TableName() + ".*," + SnsTopicUserM.TableName() + ".cate_id," + SnsTopicUserM.TableName() + ".user_id").Joins("left join " + SnsTopicUserM.TableName() + " on " + SnsTopicM.TableName() + ".id = " + SnsTopicUserM.TableName() + ".topics_id").Where(Where).Scopes(Paginate.Paginate(req.Page, req.PageSize)).Order(SnsTopicM.TableName() + ".id desc").Find(&SnsTopicData)
 
 	if result.Error != nil {
 		return nil, Errorx.NewDefaultError("系统异常")

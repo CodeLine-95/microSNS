@@ -32,7 +32,7 @@ func (l *TopicDetailLogic) TopicDetail(req types.TopicItemReq) (resp *types.Topi
 	var SnsTopicUserM model.SnsTopicsUsers
 	var SnsTopicData types.TopicItem
 
-	result := l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SnsTopicM.TableName()+".*,"+SnsTopicUserM.TableName()+".cate_id").Joins("left join "+SnsTopicUserM.TableName()+" on "+SnsTopicM.TableName()+".id = "+SnsTopicUserM.TableName()+".topics_id").Where(SnsTopicM.TableName()+".id = ?", req.TopicId).Find(&SnsTopicData)
+	result := l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SnsTopicM.TableName()+".*,"+SnsTopicUserM.TableName()+".cate_id,"+SnsTopicUserM.TableName()+".user_id").Joins("left join "+SnsTopicUserM.TableName()+" on "+SnsTopicM.TableName()+".id = "+SnsTopicUserM.TableName()+".topics_id").Where(SnsTopicM.TableName()+".id = ?", req.TopicId).Find(&SnsTopicData)
 
 	if result.Error != nil {
 		return nil, Errorx.NewDefaultError("系统异常")

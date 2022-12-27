@@ -75,6 +75,7 @@ type TopicItemReq struct {
 type TopicItem struct {
 	Id          uint32 `json:"id"`
 	CateId      uint   `json:"cate_id"`       // 版块ID
+	UserId      uint   `json:"user_id"`       // 用户ID
 	Title       string `json:"title"`         // 标题
 	Tags        string `json:"tags"`          // 标签
 	State       uint8  `json:"state"`         // 状态：0-草稿/1-发布
