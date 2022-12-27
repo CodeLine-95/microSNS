@@ -21,7 +21,6 @@ func (m *SnsTopics) JoinSelectFields(fieldStr string) string {
 
 	fields := strings.Split(fieldStr, ",")
 
-	returnStr = returnStr + ","
 	for _, s := range fields {
 		returnStr += SnsTopicUsers.TableName() + "." + s + ","
 	}
