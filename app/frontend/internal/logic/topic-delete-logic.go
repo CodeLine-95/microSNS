@@ -28,9 +28,9 @@ func NewTopicDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) TopicD
 
 func (l *TopicDeleteLogic) TopicDelete(req types.TopicItemReq) (resp *types.CommonResply, err error) {
 
-	var SnsTopic model.SnsTopics
+	var SnsTopicM model.SnsTopics
 
-	result := l.svcCtx.Engine.Table(SnsTopic.TableName()).Where("id = ?", req.TopicId).Updates(map[string]interface{}{
+	result := l.svcCtx.Engine.Table(SnsTopicM.TableName()).Where("id = ?", req.TopicId).Updates(map[string]interface{}{
 		"is_delete":  1,
 		"deleted_at": l.svcCtx.T.String(),
 	})

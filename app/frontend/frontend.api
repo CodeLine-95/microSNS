@@ -37,7 +37,7 @@ service frontend-api{
 		summary: "话题详情"
 	)
 	@handler TopicDetail
-	post /topic/detail (TopicItemReq) returns (TopicListsResply)
+	post /topic/detail (TopicItemReq) returns (TopicDetailResply)
 	
 	@doc (
 		summary: "发布话题"
