@@ -39,6 +39,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/topic/detail",
+				Handler: TopicDetailHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/topic/create",
 				Handler: TopicCreateHandler(serverCtx),
 			},

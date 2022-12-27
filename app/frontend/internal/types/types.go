@@ -63,7 +63,12 @@ type TopicListsResply struct {
 	Data       []TopicItem `json:"data"`
 }
 
-type TopicDeleteReq struct {
+type TopicDetailResply struct {
+	CommonResply
+	Data TopicItem `json:"data"`
+}
+
+type TopicItemReq struct {
 	TopicId uint32 `json:"topic_id"`
 }
 

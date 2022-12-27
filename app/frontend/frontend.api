@@ -34,6 +34,12 @@ service frontend-api{
 	post /topic/lists (TopicListsReq) returns (TopicListsResply)
 	
 	@doc (
+		summary: "话题详情"
+	)
+	@handler TopicDetail
+	post /topic/detail (TopicItemReq) returns (TopicListsResply)
+	
+	@doc (
 		summary: "发布话题"
 	)
 	@handler TopicCreate
@@ -43,7 +49,7 @@ service frontend-api{
 		summary: "删除话题"
 	)
 	@handler TopicDelete
-	delete /topic/delete (TopicDeleteReq) returns (CommonResply)
+	delete /topic/delete (TopicItemReq) returns (CommonResply)
 }
 
 // 定义请求参数和返回值
@@ -109,7 +115,12 @@ type (
 		Data       []TopicItem `json:"data"`
 	}
 
-	TopicDeleteReq {
+	TopicDetailResply {
+		CommonResply
+		Data TopicItem `json:"data"`
+	}
+
+	TopicItemReq {
 		TopicId uint32 `json:"topic_id"`
 	}
 

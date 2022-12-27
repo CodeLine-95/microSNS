@@ -102,7 +102,7 @@ func TopicListHandler(ctx *svc.ServiceContext) http.HandlerFunc {
 
 func TopicDeleteHandler(ctx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.TopicDeleteReq
+		var req types.TopicItemReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.Error(w, err)
 			return
@@ -110,6 +110,24 @@ func TopicDeleteHandler(ctx *svc.ServiceContext) http.HandlerFunc {
 
 		l := logic.NewTopicDeleteLogic(r.Context(), ctx)
 		resp, err := l.TopicDelete(req)
+		if err != nil {
+			httpx.Error(w, err)
+		} else {
+			httpx.OkJson(w, resp)
+		}
+	}
+}
+
+func TopicDetailHandler(ctx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.TopicItemReq
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.Error(w, err)
+			return
+		}
+
+		l := logic.NewTopicDetailLogic(r.Context(), ctx)
+		resp, err := l.TopicDetail(req)
 		if err != nil {
 			httpx.Error(w, err)
 		} else {
