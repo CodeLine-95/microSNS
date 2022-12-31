@@ -16,6 +16,14 @@ type LoginReq struct {
 	Pass string `json:"pass"` // 用户密码
 }
 
+type UserCheckinsReq struct {
+}
+
+type UserIntegralReq struct {
+	Page     int `json:"page,optional"`
+	PageSize int `json:"pageSize,optional"`
+}
+
 type CateListsReq struct {
 	Page     int `json:"page,optional"`
 	PageSize int `json:"pageSize,optional"`

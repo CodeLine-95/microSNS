@@ -7,47 +7,42 @@ info (
 )
 
 service frontend-api{
-	@doc (
-		summary: "用户注册"
-	)
+	@doc "用户注册"
 	@handler Register
 	post /user/register (RegisterReq) returns (CommonResply)
 	
-	@doc (
-		summary: "用户登录"
-	)
+	@doc "用户登录"
 	@handler Login
 	post /user/login (LoginReq) returns (CommonResply)
 }
 
 service frontend-api{
-	@doc (
-		summary: "话题板块"
-	)
+	@doc "用户签到"
+	@handler UserCheckins
+	post /user/checkins (UserCheckinsReq) returns (CommonResply)
+	
+	@doc "积分列表"
+	@handler UserIntegral
+	post /user/integral (UserIntegralReq) returns (CommonResply)
+	
+	@doc "话题板块"
 	@handler CateList
 	post /cate/lists (CateListsReq) returns (CateListsResply)
 	
-	@doc (
-		summary: "话题列表"
-	)
+	// 话题
+	@doc "话题列表"
 	@handler TopicList
 	post /topic/lists (TopicListsReq) returns (TopicListsResply)
 	
-	@doc (
-		summary: "话题详情"
-	)
+	@doc "话题详情"
 	@handler TopicDetail
 	post /topic/detail (TopicItemReq) returns (TopicDetailResply)
 	
-	@doc (
-		summary: "发布话题"
-	)
+	@doc "发布话题"
 	@handler TopicCreate
 	post /topic/create (TopicCreateReq) returns (CommonResply)
 	
-	@doc (
-		summary: "删除话题"
-	)
+	@doc "删除话题"
 	@handler TopicDelete
 	delete /topic/delete (TopicItemReq) returns (CommonResply)
 }
@@ -67,6 +62,14 @@ type (
 	LoginReq {
 		Name string `json:"name"` // 用户名
 		Pass string `json:"pass"` // 用户密码
+	}
+
+	// 用户签到
+	UserCheckinsReq struct{}
+	// 积分列表
+	UserIntegralReq {
+		Page     int `json:"page,optional"`
+		PageSize int `json:"pageSize,optional"`
 	}
 
 	CateListsReq {

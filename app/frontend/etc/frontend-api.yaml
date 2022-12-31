@@ -3,7 +3,7 @@ Host: 0.0.0.0
 Port: 9000
 # log日志配置
 Log:
-  Mode: file
+  Mode: file # [console,file,volume]
   Level: info
   Compress: true
 

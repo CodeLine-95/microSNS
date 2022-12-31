@@ -135,3 +135,39 @@ func TopicDetailHandler(ctx *svc.ServiceContext) http.HandlerFunc {
 		}
 	}
 }
+
+func UserCheckinsHandler(ctx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.UserCheckinsReq
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.Error(w, err)
+			return
+		}
+
+		l := logic.NewUserCheckinsLogic(r.Context(), ctx)
+		resp, err := l.UserCheckins(req)
+		if err != nil {
+			httpx.Error(w, err)
+		} else {
+			httpx.OkJson(w, resp)
+		}
+	}
+}
+
+func UserIntegralHandler(ctx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.UserIntegralReq
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.Error(w, err)
+			return
+		}
+
+		l := logic.NewUserIntegralLogic(r.Context(), ctx)
+		resp, err := l.UserIntegral(req)
+		if err != nil {
+			httpx.Error(w, err)
+		} else {
+			httpx.OkJson(w, resp)
+		}
+	}
+}

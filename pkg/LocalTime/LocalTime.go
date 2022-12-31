@@ -3,6 +3,7 @@ package LocalTime
 import (
 	"database/sql/driver"
 	"fmt"
+	"github.com/jobhandsome/microSNS/common/define"
 	"strconv"
 	"time"
 )
@@ -21,10 +22,12 @@ func (t LocalTime) MarshalJSON() []byte {
 }
 
 // 任意日期格式转换成 时间戳
-func (t *LocalTime) UnmarshalJSON(data []byte) error {
-	now, err := time.ParseInLocation(`"`+timeFormat+`"`, string(data), time.Local)
-	*t = LocalTime{Time: now}
-	return err
+func (t *LocalTime) DateTimeToStamp(data string) int64 {
+	now, err := time.ParseInLocation(timeFormat, data, time.Local)
+	if err != nil {
+		return time.Now().Unix()
+	}
+	return now.Unix()
 }
 func (t LocalTime) Value() driver.Value {
 	var zeroTime time.Time
@@ -37,6 +40,11 @@ func (t LocalTime) Value() driver.Value {
 // 当前时间转换成日期格式
 func (t LocalTime) String() string {
 	return time.Now().Format(timeFormat)
+}
+
+// 当前时间转换成日期格式
+func (t LocalTime) FormatString(Format string) string {
+	return time.Now().Format(Format)
 }
 
 // 1. 设置时区
@@ -53,6 +61,11 @@ func (t *LocalTime) Scan(v interface{}) error {
 		return nil
 	}
 	return fmt.Errorf("can not convert %v to timestamp", v)
+}
+
+// 获取指定 年、月、日
+func (t LocalTime) SpecifiedDate(year, month, day int) string {
+	return time.Now().AddDate(year, month, day).Format(define.DateDayFormat)
 }
 
 // 将指定格式的日期，转成 YYYY-MM-DD HH:ii:ss

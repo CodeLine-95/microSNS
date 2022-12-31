@@ -29,6 +29,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
+				Path:    "/user/checkins",
+				Handler: UserCheckinsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/user/integral",
+				Handler: UserIntegralHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/cate/lists",
 				Handler: CateListHandler(serverCtx),
 			},

@@ -27,6 +27,9 @@ var (
 	// DatetimeFormat 时间格式化参数
 	DatetimeFormat = "2006-01-02 15:04:05"
 
+	// DateDayFormat 时间格式化参数
+	DateDayFormat = "2006-01-02"
+
 	// TokenExpire Token 过期时间
 	TokenExpire = 3600
 
