@@ -31,13 +31,12 @@ func (l *UserCheckinsLogic) UserCheckins(req types.UserCheckinsReq) (resp *types
 
 	var SnsCheckins model.SnsCheckins
 
-	var SnsUsersM model.SnsUsers
-	var SnsUserRow int64
-	resultU := l.svcCtx.Engine.Table(SnsUsersM.TableName()).Where("id = ?", UserId).Count(&SnsUserRow)
+	var SnsUsers model.SnsUsers
+	resultU := l.svcCtx.Engine.Table(SnsUsers.TableName()).Where("id = ?", UserId).Find(&SnsUsers)
 	if resultU.Error != nil {
 		return nil, Errorx.NewDefaultError(resultU.Error.Error())
 	}
-	if SnsUserRow == 0 {
+	if resultU.RowsAffected == 0 {
 		return nil, Errorx.NewDefaultError("该用户不存在，请检查用户......")
 	}
 
@@ -46,11 +45,13 @@ func (l *UserCheckinsLogic) UserCheckins(req types.UserCheckinsReq) (resp *types
 		return nil, Errorx.NewDefaultError(resultC.Error.Error())
 	}
 
+	transaction := l.svcCtx.Engine.Begin()
+
 	// 如果是第一次签到 | 断签
 	SnsCheckinsC := model.SnsCheckins{
 		UserId:         uint(UserId),
 		CumulativeDays: SnsCheckins.CumulativeDays + 1,
-		ContinuityDays: SnsCheckins.ContinuityDays + 1,
+		ContinuityDays: 1,
 		LastTime:       l.svcCtx.T.String(),
 		CreatedAt:      l.svcCtx.T.String(),
 		UpdatedAt:      l.svcCtx.T.String(),
@@ -72,9 +73,36 @@ func (l *UserCheckinsLogic) UserCheckins(req types.UserCheckinsReq) (resp *types
 		}
 	}
 
-	resultS := l.svcCtx.Engine.Create(&SnsCheckinsC)
+	resultS := transaction.Create(&SnsCheckinsC)
 	if resultS.Error != nil {
+		transaction.Rollback()
 		return nil, Errorx.NewDefaultError(resultS.Error.Error())
+	}
+
+	// 积分
+	SnsIntegralLogs := model.SnsIntegralLogs{
+		UserId:    uint(UserId),
+		Rewards:   20,
+		Mode:      "签到",
+		CreatedAt: l.svcCtx.T.String(),
+	}
+
+	resultI := transaction.Create(&SnsIntegralLogs)
+	if resultI.Error != nil {
+		transaction.Rollback()
+		return nil, Errorx.NewDefaultError(resultI.Error.Error())
+	}
+
+	// 更新用户积分总数
+	resultD := transaction.Table(SnsUsers.TableName()).Where("id = ?", UserId).Update("Integral", SnsUsers.Integral+20)
+	if resultD.Error != nil {
+		transaction.Rollback()
+		return nil, Errorx.NewDefaultError(resultD.Error.Error())
+	}
+
+	if CommitErr := transaction.Commit().Error; CommitErr != nil {
+		transaction.Rollback()
+		return nil, Errorx.NewDefaultError(CommitErr.Error())
 	}
 
 	return &types.CommonResply{
