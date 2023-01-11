@@ -59,16 +59,16 @@ func (l *UserCheckinsLogic) UserCheckins(req types.UserCheckinsReq) (resp *types
 
 	// 如果之前签到过
 	if resultC.RowsAffected > 0 {
-		LastTime := l.svcCtx.T.DateTimeToStamp(SnsCheckins.LastTime)
+		//LastTime := l.svcCtx.T.DateTimeToStamp(SnsCheckins.LastTime)
 		LastDayTime := l.svcCtx.T.DateTimeToStamp(helper.SubStr(SnsCheckins.LastTime, 0, 10) + " 23:59:59")
 		NowTime := l.svcCtx.T.DateTimeToStamp(l.svcCtx.T.String())
-		BreakTime := l.svcCtx.T.DateTimeToStamp(l.svcCtx.T.SpecifiedDate(0, 0, 1) + " 23:59:59")
+		BreakTime := l.svcCtx.T.DateTimeToStamp(helper.SubStr(l.svcCtx.T.SpecifiedTimeForDayAfter(SnsCheckins.LastTime), 0, 10) + " 23:59:59")
 
 		if NowTime < LastDayTime {
 			return nil, Errorx.NewDefaultError("今天已签到")
 		}
 
-		if LastTime < BreakTime {
+		if NowTime < BreakTime {
 			SnsCheckinsC.ContinuityDays = SnsCheckins.CumulativeDays + 1
 		}
 	}

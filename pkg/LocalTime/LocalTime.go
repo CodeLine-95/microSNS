@@ -68,6 +68,12 @@ func (t LocalTime) SpecifiedDate(year, month, day int) string {
 	return time.Now().AddDate(year, month, day).Format(define.DateDayFormat)
 }
 
+func (t LocalTime) SpecifiedTimeForDayAfter(LastTime string) string {
+	now, _ := time.ParseInLocation(timeFormat, LastTime, time.Local)
+	dh, _ := time.ParseDuration(fmt.Sprintf("+%dh", 24))
+	return now.Add(dh).Format(timeFormat)
+}
+
 // 将指定格式的日期，转成 YYYY-MM-DD HH:ii:ss
 func (t LocalTime) FormatDateString(MyDateString string) string {
 	// 1. 设置时区
