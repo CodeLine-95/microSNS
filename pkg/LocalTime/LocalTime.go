@@ -68,9 +68,17 @@ func (t LocalTime) SpecifiedDate(year, month, day int) string {
 	return time.Now().AddDate(year, month, day).Format(define.DateDayFormat)
 }
 
+// 获取指定日期的后一天
 func (t LocalTime) SpecifiedTimeForDayAfter(LastTime string) string {
 	now, _ := time.ParseInLocation(timeFormat, LastTime, time.Local)
 	dh, _ := time.ParseDuration(fmt.Sprintf("+%dh", 24))
+	return now.Add(dh).Format(timeFormat)
+}
+
+// 获取指定日期的前一天
+func (t LocalTime) SpecifiedTimeForDayBefore(LastTime string) string {
+	now, _ := time.ParseInLocation(timeFormat, LastTime, time.Local)
+	dh, _ := time.ParseDuration(fmt.Sprintf("-%dh", 24))
 	return now.Add(dh).Format(timeFormat)
 }
 
