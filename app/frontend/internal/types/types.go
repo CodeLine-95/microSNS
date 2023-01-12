@@ -24,6 +24,21 @@ type UserIntegralReq struct {
 	PageSize int `json:"pageSize,optional"`
 }
 
+type UserIntegralResply struct {
+	CommonResply
+	TotalCount int64              `json:"totalCount"`
+	CurrCount  int                `json:"currCount"`
+	Data       []UserIntegralItem `json:"data"`
+}
+
+type UserIntegralItem struct {
+	Id        uint   `json:"id"`
+	UserId    uint   `json:"user_id"`
+	Rewards   uint64 `json:"rewards"`
+	Mode      string `json:"mode"`
+	CreatedAt string `json:"created_at"`
+}
+
 type CateListsReq struct {
 	Page     int `json:"page,optional"`
 	PageSize int `json:"pageSize,optional"`

@@ -23,7 +23,7 @@ service frontend-api{
 	
 	@doc "积分列表"
 	@handler UserIntegral
-	post /user/integral (UserIntegralReq) returns (CommonResply)
+	post /user/integral (UserIntegralReq) returns (UserIntegralResply)
 	
 	@doc "话题板块"
 	@handler CateList
@@ -70,6 +70,21 @@ type (
 	UserIntegralReq {
 		Page     int `json:"page,optional"`
 		PageSize int `json:"pageSize,optional"`
+	}
+
+	UserIntegralResply {
+		CommonResply
+		TotalCount int64              `json:"totalCount"`
+		CurrCount  int                `json:"currCount"`
+		Data       []UserIntegralItem `json:"data"`
+	}
+
+	UserIntegralItem {
+		Id        uint   `json:"id"`
+		UserId    uint   `json:"user_id"`
+		Rewards   uint64 `json:"rewards"`
+		Mode      string `json:"mode"`
+		CreatedAt string `json:"created_at"`
 	}
 
 	CateListsReq {
