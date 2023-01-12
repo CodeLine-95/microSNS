@@ -69,7 +69,7 @@ func (l *UserCheckinsLogic) UserCheckins(req types.UserCheckinsReq) (resp *types
 		}
 
 		if NowTime < BreakTime {
-			SnsCheckinsC.ContinuityDays = SnsCheckins.CumulativeDays + 1
+			SnsCheckinsC.ContinuityDays = SnsCheckins.ContinuityDays + 1
 		}
 	}
 
