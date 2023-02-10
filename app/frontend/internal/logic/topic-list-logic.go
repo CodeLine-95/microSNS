@@ -47,8 +47,8 @@ func (l *TopicListLogic) TopicList(req types.TopicListsReq) (resp *types.TopicLi
 		return nil, Errorx.NewDefaultError("系统异常")
 	}
 
-	return &types.TopicListsResply{types.CommonResply{
+	return &types.TopicListsResply{CommonResply: types.CommonResply{
 		Code:    http.StatusOK,
 		Message: "获取成功",
-	}, TotalCount, len(SnsTopicData), SnsTopicData}, nil
+	}, TotalCount: TotalCount, CurrCount: len(SnsTopicData), Data: SnsTopicData}, nil
 }

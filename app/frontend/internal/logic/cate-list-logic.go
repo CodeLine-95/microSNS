@@ -45,8 +45,8 @@ func (l *CateListLogic) CateList(req types.CateListsReq) (resp *types.CateListsR
 		return nil, Errorx.NewDefaultError("系统异常")
 	}
 
-	return &types.CateListsResply{types.CommonResply{
+	return &types.CateListsResply{CommonResply: types.CommonResply{
 		Code:    http.StatusOK,
 		Message: "获取成功",
-	}, TotalCount, len(SnsCateData), SnsCateData}, nil
+	}, TotalCount: TotalCount, CurrCount: len(SnsCateData), Data: SnsCateData}, nil
 }

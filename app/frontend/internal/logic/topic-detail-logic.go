@@ -44,8 +44,8 @@ func (l *TopicDetailLogic) TopicDetail(req types.TopicItemReq) (resp *types.Topi
 		return nil, Errorx.NewDefaultError("该话题不存在或已删除")
 	}
 
-	return &types.TopicDetailResply{types.CommonResply{
+	return &types.TopicDetailResply{CommonResply: types.CommonResply{
 		Code:    http.StatusOK,
 		Message: "获取成功",
-	}, SnsTopicData}, nil
+	}, Data: SnsTopicData}, nil
 }
