@@ -37,11 +37,11 @@ func (l *TopicListLogic) TopicList(req types.TopicListsReq) (resp *types.TopicLi
 
 	Where := "1=1 and " + SnsTopicM.TableName() + ".is_delete = 0"
 
-	SelectFileds := SnsTopicM.JoinSelectFields("cate_id,user_id,reply_id,view_count,like_count,comment_count")
+	SelectFields := SnsTopicM.JoinSelectFields("cate_id,user_id,reply_id,view_count,like_count,comment_count")
 
-	l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SelectFileds).Joins("left join " + SnsTopicUserM.TableName() + " on " + SnsTopicM.TableName() + ".id = " + SnsTopicUserM.TableName() + ".topics_id").Count(&TotalCount)
+	l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SelectFields).Joins("left join " + SnsTopicUserM.TableName() + " on " + SnsTopicM.TableName() + ".id = " + SnsTopicUserM.TableName() + ".topics_id").Count(&TotalCount)
 
-	result := l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SelectFileds).Joins("left join " + SnsTopicUserM.TableName() + " on " + SnsTopicM.TableName() + ".id = " + SnsTopicUserM.TableName() + ".topics_id").Where(Where).Scopes(Paginate.Paginate(req.Page, req.PageSize)).Order(SnsTopicM.TableName() + ".id desc").Find(&SnsTopicData)
+	result := l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SelectFields).Joins("left join " + SnsTopicUserM.TableName() + " on " + SnsTopicM.TableName() + ".id = " + SnsTopicUserM.TableName() + ".topics_id").Where(Where).Scopes(Paginate.Paginate(req.Page, req.PageSize)).Order(SnsTopicM.TableName() + ".id desc").Find(&SnsTopicData)
 
 	if result.Error != nil {
 		return nil, Errorx.NewDefaultError("系统异常")

@@ -32,9 +32,9 @@ func (l *TopicDetailLogic) TopicDetail(req types.TopicItemReq) (resp *types.Topi
 	var SnsTopicUserM model.SnsTopicsUsers
 	var SnsTopicData types.TopicItem
 
-	SelectFileds := SnsTopicM.JoinSelectFields("cate_id,user_id,reply_id,view_count,like_count,comment_count")
+	SelectFields := SnsTopicM.JoinSelectFields("cate_id,user_id,reply_id,view_count,like_count,comment_count")
 
-	result := l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SelectFileds).Joins("left join "+SnsTopicUserM.TableName()+" on "+SnsTopicM.TableName()+".id = "+SnsTopicUserM.TableName()+".topics_id").Where(SnsTopicM.TableName()+".id = ?", req.TopicId).Find(&SnsTopicData)
+	result := l.svcCtx.Engine.Table(SnsTopicM.TableName()).Select(SelectFields).Joins("left join "+SnsTopicUserM.TableName()+" on "+SnsTopicM.TableName()+".id = "+SnsTopicUserM.TableName()+".topics_id").Where(SnsTopicM.TableName()+".id = ?", req.TopicId).Find(&SnsTopicData)
 
 	if result.Error != nil {
 		return nil, Errorx.NewDefaultError("系统异常")
