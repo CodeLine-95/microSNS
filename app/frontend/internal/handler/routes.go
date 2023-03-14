@@ -14,20 +14,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/user/register",
+				Path:    "/register",
 				Handler: RegisterHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/user/login",
+				Path:    "/login",
 				Handler: LoginHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/user/send-email-code",
+				Path:    "/send-email-code",
 				Handler: SendEmailCodeHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/common"),
 	)
 
 	server.AddRoutes(
@@ -68,5 +69,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: TopicDeleteHandler(serverCtx),
 			},
 		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)
 }

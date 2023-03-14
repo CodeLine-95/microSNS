@@ -48,6 +48,7 @@ func (l *LoginLogic) Login(req types.LoginReq) (resp *types.LoginResply, err err
 	// 生成token
 	mapClaims := make(map[string]interface{})
 
+	mapClaims["userId"] = SnsUserM.Id
 	mapClaims["name"] = SnsUserM.Name
 	mapClaims["email"] = SnsUserM.Email
 

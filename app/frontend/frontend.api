@@ -5,22 +5,24 @@ info (
 	author: "jobhandsome"
 	version: "1.0.0"
 )
-
+@server(
+	prefix: common
+)
 service frontend-api{
 	@doc "用户注册"
 	@handler Register
-	post /user/register (RegisterReq) returns (CommonResply)
+	post /register (RegisterReq) returns (CommonResply)
 	
 	@doc "用户登录"
 	@handler Login
-	post /user/login (LoginReq) returns (LoginResply)
+	post /login (LoginReq) returns (LoginResply)
 	
 	@doc "发送邮箱码"
 	@handler SendEmailCode
-	post /user/send-email-code (SenEmailCodeReq) returns (CommonResply)
+	post /send-email-code (SenEmailCodeReq) returns (CommonResply)
 }
 
-@server (
+@server(
 	jwt: Auth
 )
 
