@@ -18,6 +18,11 @@ type LoginReq struct {
 	Pass  string `json:"pass"`  // 用户密码
 }
 
+type LoginResply struct {
+	CommonResply
+	Token string `json:"token"`
+}
+
 type SenEmailCodeReq struct {
 	Email string `json:"email"`
 }

@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/jobhandsome/microSNS/pkg/jwt"
 	"net/http"
 
 	"github.com/jobhandsome/microSNS/app/frontend/internal/svc"
@@ -27,7 +28,7 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) LoginLogic {
 	}
 }
 
-func (l *LoginLogic) Login(req types.LoginReq) (resp *types.CommonResply, err error) {
+func (l *LoginLogic) Login(req types.LoginReq) (resp *types.LoginResply, err error) {
 
 	var SnsUserM model.SnsUsers
 
@@ -45,9 +46,23 @@ func (l *LoginLogic) Login(req types.LoginReq) (resp *types.CommonResply, err er
 	if AesDePass != req.Pass {
 		return nil, Errorx.NewDefaultError("密码错误，请重试...")
 	}
+	// 生成token
+	mapClaims := make(map[string]interface{})
 
-	return &types.CommonResply{
-		Code:    http.StatusOK,
-		Message: "登录成功",
+	mapClaims["id"] = SnsUserM.Id
+	mapClaims["name"] = SnsUserM.Name
+	mapClaims["email"] = SnsUserM.Email
+
+	token, tokenErr := jwt.GenerateToken(mapClaims, l.svcCtx.Config.SecretKey)
+	if tokenErr != nil {
+		return nil, Errorx.NewDefaultError(tokenErr.Error())
+	}
+
+	return &types.LoginResply{
+		CommonResply: types.CommonResply{
+			Code:    http.StatusOK,
+			Message: "登录成功",
+		},
+		Token: token,
 	}, nil
 }

@@ -61,7 +61,7 @@ func (l *RegisterLogic) Register(req types.RegisterReq) (resp *types.CommonRespl
 
 	// 获取发送的验证码
 	sendCode, sendErr := l.svcCtx.RDB.Get(l.ctx, req.Email).Result()
-	if sendErr != redis.Nil {
+	if sendErr != nil && sendErr != redis.Nil {
 		return nil, Errorx.NewDefaultError("系统异常")
 	}
 	if len(sendCode) == 0 {
@@ -78,6 +78,7 @@ func (l *RegisterLogic) Register(req types.RegisterReq) (resp *types.CommonRespl
 	saveRes := l.svcCtx.Engine.Create(&model.SnsUsers{
 		Name:      "sns_" + helper.RandomString(10),
 		Pass:      AesEnPass,
+		Email:     req.Email,
 		State:     0,
 		IsDelete:  0,
 		CreatedAt: l.svcCtx.T.String(),

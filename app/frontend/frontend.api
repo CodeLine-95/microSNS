@@ -13,7 +13,7 @@ service frontend-api{
 	
 	@doc "用户登录"
 	@handler Login
-	post /user/login (LoginReq) returns (CommonResply)
+	post /user/login (LoginReq) returns (LoginResply)
 	
 	@doc "发送邮箱码"
 	@handler SendEmailCode
@@ -68,6 +68,11 @@ type (
 	LoginReq {
 		Email string `json:"email"` // 用户邮箱
 		Pass  string `json:"pass"`  // 用户密码
+	}
+
+	LoginResply {
+		CommonResply
+		Token string `json:"token"`
 	}
 
 	SenEmailCodeReq {
