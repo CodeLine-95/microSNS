@@ -24,7 +24,9 @@ func main() {
 	conf.MustLoad(*configFile, &c)
 
 	ctx := svc.NewServiceContext(c)
-	server := rest.MustNewServer(c.RestConf)
+	server := rest.MustNewServer(c.RestConf, rest.WithUnauthorizedCallback(func(w http.ResponseWriter, r *http.Request, err error) {
+		httpx.WriteJson(w, http.StatusUnauthorized, Errorx.NewCodeError(http.StatusUnauthorized, "Authorization 不能为空"))
+	}))
 	defer server.Stop()
 
 	handler.RegisterHandlers(server, ctx)
