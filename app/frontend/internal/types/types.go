@@ -7,13 +7,18 @@ type CommonResply struct {
 }
 
 type RegisterReq struct {
-	Name string `json:"name"` // 用户名
-	Pass string `json:"pass"` // 用户密码，加密
+	Email       string `json:"email"`        // 用户邮箱
+	Pass        string `json:"pass"`         // 用户密码，加密
+	ConfirmPass string `json:"confirm_pass"` // 确认密码
 }
 
 type LoginReq struct {
-	Name string `json:"name"` // 用户名
-	Pass string `json:"pass"` // 用户密码
+	Email string `json:"email"` // 用户邮箱
+	Pass  string `json:"pass"`  // 用户密码
+}
+
+type SenEmailCodeReq struct {
+	Email string `json:"email"`
 }
 
 type UserCheckinsReq struct {

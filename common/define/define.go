@@ -10,7 +10,7 @@ package define
 
 var (
 	// MailPassword 邮件发送者密码
-	MailPassword = ""
+	MailPassword = "SCHKTABLAAGBTSXA"
 
 	// PageSize 分页的默认参数
 	PageSize = 10

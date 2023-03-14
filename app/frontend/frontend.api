@@ -14,6 +14,10 @@ service frontend-api{
 	@doc "用户登录"
 	@handler Login
 	post /user/login (LoginReq) returns (CommonResply)
+	
+	@doc "发送邮箱码"
+	@handler SendEmailCode
+	post /user/send-email-code (SenEmailCodeReq) returns (CommonResply)
 }
 
 service frontend-api{
@@ -55,13 +59,18 @@ type (
 	}
 
 	RegisterReq {
-		Name string `json:"name"` // 用户名
-		Pass string `json:"pass"` // 用户密码，加密
+		Email       string `json:"email"`        // 用户邮箱
+		Pass        string `json:"pass"`         // 用户密码，加密
+		ConfirmPass string `json:"confirm_pass"` // 确认密码
 	}
 
 	LoginReq {
-		Name string `json:"name"` // 用户名
-		Pass string `json:"pass"` // 用户密码
+		Email string `json:"email"` // 用户邮箱
+		Pass  string `json:"pass"`  // 用户密码
+	}
+
+	SenEmailCodeReq {
+		Email string `json:"email"`
 	}
 
 	// 用户签到
