@@ -10,6 +10,7 @@ type RegisterReq struct {
 	Email       string `json:"email"`        // 用户邮箱
 	Pass        string `json:"pass"`         // 用户密码，加密
 	ConfirmPass string `json:"confirm_pass"` // 确认密码
+	Code        string `json:"code"`         // 邮箱验证码
 }
 
 type LoginReq struct {

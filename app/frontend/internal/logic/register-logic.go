@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/redis/go-redis/v9"
 	"net/http"
 
 	"github.com/jobhandsome/microSNS/common/helper"
@@ -53,11 +54,30 @@ func (l *RegisterLogic) Register(req types.RegisterReq) (resp *types.CommonRespl
 		return nil, Errorx.NewDefaultError("该邮箱已注册")
 	}
 
-	AesDePass := Crypto.AesEncrypt(req.Pass, l.svcCtx.Config.SecretKey)
+	// 确认密码验证
+	if req.Pass != req.ConfirmPass {
+		return nil, Errorx.NewDefaultError("确认密码错误")
+	}
+
+	// 获取发送的验证码
+	sendCode, sendErr := l.svcCtx.RDB.Get(l.ctx, req.Email).Result()
+	if sendErr != redis.Nil {
+		return nil, Errorx.NewDefaultError("系统异常")
+	}
+	if len(sendCode) == 0 {
+		return nil, Errorx.NewDefaultError("该验证码已过期")
+	}
+
+	// 邮箱验证码验证
+	if sendCode != req.Code {
+		return nil, Errorx.NewDefaultError("验证码错误")
+	}
+
+	AesEnPass := Crypto.AesEncrypt(req.Pass, l.svcCtx.Config.SecretKey)
 
 	saveRes := l.svcCtx.Engine.Create(&model.SnsUsers{
 		Name:      "sns_" + helper.RandomString(10),
-		Pass:      AesDePass,
+		Pass:      AesEnPass,
 		State:     0,
 		IsDelete:  0,
 		CreatedAt: l.svcCtx.T.String(),

@@ -5,6 +5,7 @@ import (
 	"github.com/jobhandsome/microSNS/app/frontend/internal/svc"
 	"github.com/jobhandsome/microSNS/app/frontend/internal/types"
 	"github.com/jobhandsome/microSNS/common/helper"
+	"github.com/jobhandsome/microSNS/model"
 	"github.com/jobhandsome/microSNS/pkg/Errorx"
 	"net/http"
 	"time"
@@ -28,9 +29,18 @@ func NewSendEmailCodeLogic(ctx context.Context, svcCtx *svc.ServiceContext) Send
 
 func (l *SendEmailCodeLogic) SendEmailCode(req types.SenEmailCodeReq) (resp *types.CommonResply, err error) {
 
+	var SnsUserM model.SnsUsers
 	// 验证邮箱
 	if ok := helper.CheckUseremail(req.Email); !ok {
 		return nil, Errorx.NewDefaultError("邮箱格式错误")
+	}
+	result := l.svcCtx.Engine.Table(SnsUserM.TableName()).Where("email = ?", req.Email).Find(&SnsUserM)
+	if result.Error != nil {
+		return nil, Errorx.NewDefaultError("系统异常")
+	}
+
+	if result.RowsAffected > 0 {
+		return nil, Errorx.NewDefaultError("该邮箱已注册")
 	}
 	// 生成邮箱验证码
 	emailCode := helper.RandCode()
