@@ -49,4 +49,8 @@ func TestRun(t *testing.T) {
 	dh, _ := time.ParseDuration(fmt.Sprintf("+%dh", 24))
 	expTime := now.Add(dh).Format(timeFormat)
 	fmt.Println(expTime)
+	fmt.Println(time.Duration(18000000))
+
+	m, _ := time.ParseDuration("30m")
+	fmt.Println(time.Duration(m.Seconds() * float64(time.Second)))
 }

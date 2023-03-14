@@ -15,13 +15,13 @@ type LocalTime struct {
 	time.Time
 }
 
-// 获取当前时间 返回时间戳
+// MarshalJSON 获取当前时间 返回时间戳
 func (t LocalTime) MarshalJSON() []byte {
 	second := t.Unix()
 	return []byte(strconv.FormatInt(second, 10))
 }
 
-// 任意日期格式转换成 时间戳
+// DateTimeToStamp 任意日期格式转换成 时间戳
 func (t *LocalTime) DateTimeToStamp(data string) int64 {
 	now, err := time.ParseInLocation(timeFormat, data, time.Local)
 	if err != nil {
@@ -42,7 +42,7 @@ func (t LocalTime) String() string {
 	return time.Now().Format(timeFormat)
 }
 
-// 当前时间转换成日期格式
+// FormatString 当前时间转换成日期格式
 func (t LocalTime) FormatString(Format string) string {
 	return time.Now().Format(Format)
 }
@@ -63,26 +63,26 @@ func (t *LocalTime) Scan(v interface{}) error {
 	return fmt.Errorf("can not convert %v to timestamp", v)
 }
 
-// 获取指定 年、月、日
+// SpecifiedDate 获取指定 年、月、日
 func (t LocalTime) SpecifiedDate(year, month, day int) string {
 	return time.Now().AddDate(year, month, day).Format(define.DateDayFormat)
 }
 
-// 获取指定日期的后一天
+// SpecifiedTimeForDayAfter 获取指定日期的后一天
 func (t LocalTime) SpecifiedTimeForDayAfter(LastTime string) string {
 	now, _ := time.ParseInLocation(timeFormat, LastTime, time.Local)
 	dh, _ := time.ParseDuration(fmt.Sprintf("+%dh", 24))
 	return now.Add(dh).Format(timeFormat)
 }
 
-// 获取指定日期的前一天
+// SpecifiedTimeForDayBefore 获取指定日期的前一天
 func (t LocalTime) SpecifiedTimeForDayBefore(LastTime string) string {
 	now, _ := time.ParseInLocation(timeFormat, LastTime, time.Local)
 	dh, _ := time.ParseDuration(fmt.Sprintf("-%dh", 24))
 	return now.Add(dh).Format(timeFormat)
 }
 
-// 将指定格式的日期，转成 YYYY-MM-DD HH:ii:ss
+// FormatDateString 将指定格式的日期，转成 YYYY-MM-DD HH:ii:ss
 func (t LocalTime) FormatDateString(MyDateString string) string {
 	// 1. 设置时区
 	// 2. time.LoadLocation() 返回time.Time 类型

@@ -2,11 +2,11 @@ package svc
 
 import (
 	"fmt"
-	"github.com/go-redis/redis/v8"
 	"github.com/jobhandsome/microSNS/app/frontend/internal/config"
 	"github.com/jobhandsome/microSNS/common/define"
 	"github.com/jobhandsome/microSNS/model"
 	"github.com/jobhandsome/microSNS/pkg/LocalTime"
+	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 	"net/url"
 )

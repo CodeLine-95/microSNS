@@ -2,12 +2,13 @@ package logic
 
 import (
 	"context"
+	"net/http"
+
 	"github.com/jobhandsome/microSNS/app/frontend/internal/svc"
 	"github.com/jobhandsome/microSNS/app/frontend/internal/types"
 	"github.com/jobhandsome/microSNS/model"
 	"github.com/jobhandsome/microSNS/pkg/Crypto"
 	"github.com/jobhandsome/microSNS/pkg/Errorx"
-	"net/http"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -30,13 +31,13 @@ func (l *LoginLogic) Login(req types.LoginReq) (resp *types.CommonResply, err er
 
 	var SnsUserM model.SnsUsers
 
-	result := l.svcCtx.Engine.Table(SnsUserM.TableName()).Where("name = ?", req.Name).Find(&SnsUserM)
+	result := l.svcCtx.Engine.Table(SnsUserM.TableName()).Where("email = ?", req.Email).Find(&SnsUserM)
 	if result.Error != nil {
 		return nil, Errorx.NewDefaultError("系统异常")
 	}
 
 	if result.RowsAffected == 0 {
-		return nil, Errorx.NewDefaultError("该用户未注册")
+		return nil, Errorx.NewDefaultError("该邮箱未注册")
 	}
 
 	AesDePass := Crypto.AesDecrypt(SnsUserM.Pass, l.svcCtx.Config.SecretKey)

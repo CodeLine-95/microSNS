@@ -8,7 +8,7 @@
 
 package model
 
-// 管理员账户
+// SnsAccount 管理员账户
 type SnsAccount struct {
 	Id        uint   `gorm:"column:id;type:int(11) unsigned;primary_key;AUTO_INCREMENT" json:"id"`
 	Name      string `gorm:"column:name;type:varchar(255);comment:账户名;NOT NULL" json:"name"`
@@ -26,7 +26,7 @@ func (m *SnsAccount) TableName() string {
 	return "sns_account"
 }
 
-// 分类表
+// SnsCate 分类表
 type SnsCate struct {
 	Id        uint   `gorm:"column:id;type:int(11) unsigned;primary_key;AUTO_INCREMENT" json:"id"`
 	Name      string `gorm:"column:name;type:varchar(20);comment:名称;NOT NULL" json:"name"`
@@ -47,7 +47,7 @@ func (m *SnsCate) TableName() string {
 	return "sns_cate"
 }
 
-// 用户签到
+// SnsCheckins 用户签到
 type SnsCheckins struct {
 	Id             uint   `gorm:"column:id;type:int(11) unsigned;primary_key;AUTO_INCREMENT" json:"id"`
 	UserId         uint   `gorm:"column:user_id;type:int(11) unsigned;comment:用户ID;NOT NULL" json:"user_id"`
@@ -62,7 +62,7 @@ func (m *SnsCheckins) TableName() string {
 	return "sns_checkins"
 }
 
-// 用户关注
+// SnsFollows 用户关注
 type SnsFollows struct {
 	Id        uint   `gorm:"column:id;type:int(11) unsigned;primary_key;AUTO_INCREMENT" json:"id"`
 	UserId    uint   `gorm:"column:user_id;type:int(11) unsigned;comment:用户ID;NOT NULL" json:"user_id"`
@@ -76,7 +76,7 @@ func (m *SnsFollows) TableName() string {
 	return "sns_follows"
 }
 
-// 积分日志
+// SnsIntegralLogs 积分日志
 type SnsIntegralLogs struct {
 	Id        uint   `gorm:"column:id;type:int(11) unsigned;primary_key;AUTO_INCREMENT" json:"id"`
 	UserId    uint   `gorm:"column:user_id;type:int(11) unsigned;comment:用户ID;NOT NULL" json:"user_id"`
@@ -89,7 +89,7 @@ func (m *SnsIntegralLogs) TableName() string {
 	return "sns_integral_logs"
 }
 
-// 话题
+// SnsTopics 话题
 type SnsTopics struct {
 	Id          uint   `gorm:"column:id;type:int(11) unsigned;primary_key;AUTO_INCREMENT" json:"id"`
 	Title       string `gorm:"column:title;type:varchar(255);comment:标题;NOT NULL" json:"title"`
@@ -109,7 +109,7 @@ func (m *SnsTopics) TableName() string {
 	return "sns_topics"
 }
 
-// 话题-用户
+// SnsTopicsUsers 话题-用户
 type SnsTopicsUsers struct {
 	Id           uint   `gorm:"column:id;type:int(11) unsigned;primary_key;AUTO_INCREMENT" json:"id"`
 	TopicsId     uint   `gorm:"column:topics_id;type:int(11) unsigned;comment:话题ID;NOT NULL" json:"topics_id"`
@@ -127,7 +127,7 @@ func (m *SnsTopicsUsers) TableName() string {
 	return "sns_topics_users"
 }
 
-// 网站用户
+// SnsUsers 网站用户
 type SnsUsers struct {
 	Id        uint   `gorm:"column:id;type:int(11) unsigned;primary_key;AUTO_INCREMENT" json:"id"`
 	Name      string `gorm:"column:name;type:varchar(50);comment:用户名;NOT NULL" json:"name"`
