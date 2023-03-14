@@ -1,11 +1,11 @@
 Name: frontend-api
 Host: 0.0.0.0
 Port: 9000
-## log日志配置
-#Log:
-#  Mode: file # [console,file,volume]
-#  Level: info
-#  Compress: true
+# log日志配置
+Log:
+  Mode: file # [console,file,volume]
+  Level: info
+  Compress: true
 
 SecretKey: oingtx47safd756s
 # mysql配置
@@ -23,5 +23,5 @@ Redis:
   Pass: !!str 123456
 
 Auth:
-  Secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-  Expire: 64800
+  AccessSecret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+  AccessExpire: 64800

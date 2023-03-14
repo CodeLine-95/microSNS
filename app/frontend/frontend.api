@@ -20,6 +20,10 @@ service frontend-api{
 	post /user/send-email-code (SenEmailCodeReq) returns (CommonResply)
 }
 
+@server (
+	jwt: Auth
+)
+
 service frontend-api{
 	@doc "用户签到"
 	@handler UserCheckins

@@ -2,14 +2,13 @@ package logic
 
 import (
 	"context"
-	"github.com/jobhandsome/microSNS/pkg/jwt"
-	"net/http"
-
 	"github.com/jobhandsome/microSNS/app/frontend/internal/svc"
 	"github.com/jobhandsome/microSNS/app/frontend/internal/types"
 	"github.com/jobhandsome/microSNS/model"
 	"github.com/jobhandsome/microSNS/pkg/Crypto"
 	"github.com/jobhandsome/microSNS/pkg/Errorx"
+	"github.com/jobhandsome/microSNS/pkg/jwt"
+	"net/http"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -49,11 +48,10 @@ func (l *LoginLogic) Login(req types.LoginReq) (resp *types.LoginResply, err err
 	// 生成token
 	mapClaims := make(map[string]interface{})
 
-	mapClaims["id"] = SnsUserM.Id
 	mapClaims["name"] = SnsUserM.Name
 	mapClaims["email"] = SnsUserM.Email
 
-	token, tokenErr := jwt.GenerateToken(mapClaims, l.svcCtx.Config.SecretKey)
+	token, tokenErr := jwt.GenerateToken(mapClaims, l.svcCtx.Config.Auth.AccessSecret, l.svcCtx.Config.Auth.AccessExpire)
 	if tokenErr != nil {
 		return nil, Errorx.NewDefaultError(tokenErr.Error())
 	}

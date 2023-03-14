@@ -18,8 +18,8 @@ type Config struct {
 		Pass string
 	}
 
-	Auth struct {
-		Secret string
-		Expire int
+	Auth struct { // jwt鉴权配置
+		AccessSecret string // jwt密钥
+		AccessExpire int64  // 有效期，单位：秒
 	}
 }
