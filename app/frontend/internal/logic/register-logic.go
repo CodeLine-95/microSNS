@@ -2,8 +2,9 @@ package logic
 
 import (
 	"context"
-	"github.com/redis/go-redis/v9"
 	"net/http"
+
+	"github.com/redis/go-redis/v9"
 
 	"github.com/jobhandsome/microSNS/common/helper"
 	"github.com/jobhandsome/microSNS/model"

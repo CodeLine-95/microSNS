@@ -3,9 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net/http"
+
 	"github.com/jobhandsome/microSNS/pkg/Errorx"
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"net/http"
 
 	"github.com/jobhandsome/microSNS/app/frontend/internal/config"
 	"github.com/jobhandsome/microSNS/app/frontend/internal/handler"
@@ -37,7 +38,7 @@ func main() {
 		case *Errorx.CodeError:
 			return http.StatusOK, e.Data()
 		default:
-			return http.StatusInternalServerError, nil
+			return http.StatusInternalServerError, e
 		}
 	})
 

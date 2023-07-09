@@ -1,0 +1,792 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "mirco_sns 微社区",
+    "version": "1.0.0"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/cate/lists": {
+      "post": {
+        "summary": "话题板块",
+        "operationId": "CateList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CateListsResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CateListsReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "frontend-api"
+        ]
+      }
+    },
+    "/topic/create": {
+      "post": {
+        "summary": "发布话题",
+        "operationId": "TopicCreate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CommonResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TopicCreateReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "frontend-api"
+        ]
+      }
+    },
+    "/topic/delete": {
+      "delete": {
+        "summary": "删除话题",
+        "operationId": "TopicDelete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CommonResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TopicItemReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "frontend-api"
+        ]
+      }
+    },
+    "/topic/detail": {
+      "post": {
+        "summary": "话题详情",
+        "operationId": "TopicDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/TopicDetailResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TopicItemReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "frontend-api"
+        ]
+      }
+    },
+    "/topic/lists": {
+      "post": {
+        "summary": "话题列表",
+        "operationId": "TopicList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/TopicListsResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TopicListsReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "frontend-api"
+        ]
+      }
+    },
+    "/user/checkins": {
+      "post": {
+        "summary": "用户签到",
+        "operationId": "UserCheckins",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CommonResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 用户签到",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserCheckinsReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "frontend-api"
+        ]
+      }
+    },
+    "/user/integral": {
+      "post": {
+        "summary": "积分列表",
+        "operationId": "UserIntegral",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserIntegralResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 积分列表",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserIntegralReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "frontend-api"
+        ]
+      }
+    },
+    "common/login": {
+      "post": {
+        "summary": "用户登录",
+        "operationId": "Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LoginResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "frontend-api"
+        ]
+      }
+    },
+    "common/register": {
+      "post": {
+        "summary": "用户注册",
+        "operationId": "Register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CommonResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "frontend-api"
+        ]
+      }
+    },
+    "common/send-email-code": {
+      "post": {
+        "summary": "发送邮箱码",
+        "operationId": "SendEmailCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CommonResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SenEmailCodeReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "frontend-api"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "CateItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string",
+          "description": " 名称"
+        },
+        "alias": {
+          "type": "string",
+          "description": " 别名"
+        },
+        "desc": {
+          "type": "string",
+          "description": " 介绍"
+        },
+        "pid": {
+          "$ref": "#/definitions/uint8",
+          "description": " 上级节点"
+        },
+        "level": {
+          "$ref": "#/definitions/uint8",
+          "description": " 层级：0一级(默认)"
+        },
+        "icons": {
+          "type": "string",
+          "description": " 图标"
+        },
+        "sorts": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 排序"
+        },
+        "state": {
+          "$ref": "#/definitions/uint8",
+          "description": " 状态：0-关闭/1-开启"
+        },
+        "is_delete": {
+          "$ref": "#/definitions/uint8",
+          "description": " 软删除"
+        },
+        "created_at": {
+          "type": "string",
+          "description": " 创建时间"
+        },
+        "updated_at": {
+          "type": "string",
+          "description": " 更新时间"
+        }
+      },
+      "title": "CateItem",
+      "required": [
+        "id",
+        "name",
+        "alias",
+        "desc",
+        "pid",
+        "level",
+        "icons",
+        "sorts",
+        "state",
+        "is_delete",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "CateListsReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "CateListsReq"
+    },
+    "CateListsResply": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/CommonResply"
+        },
+        "totalCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "currCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CateItem"
+          }
+        }
+      },
+      "title": "CateListsResply",
+      "required": [
+        "totalCount",
+        "currCount",
+        "data"
+      ]
+    },
+    "CommonResply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "CommonResply",
+      "required": [
+        "code",
+        "message"
+      ]
+    },
+    "LoginReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": " 用户邮箱"
+        },
+        "pass": {
+          "type": "string",
+          "description": " 用户密码"
+        }
+      },
+      "title": "LoginReq",
+      "required": [
+        "email",
+        "pass"
+      ]
+    },
+    "LoginResply": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/CommonResply"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "title": "LoginResply",
+      "required": [
+        "token"
+      ]
+    },
+    "RegisterReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": " 用户邮箱"
+        },
+        "pass": {
+          "type": "string",
+          "description": " 用户密码，加密"
+        },
+        "confirm_pass": {
+          "type": "string",
+          "description": " 确认密码"
+        },
+        "code": {
+          "type": "string",
+          "description": " 邮箱验证码"
+        }
+      },
+      "title": "RegisterReq",
+      "required": [
+        "email",
+        "pass",
+        "confirm_pass",
+        "code"
+      ]
+    },
+    "SenEmailCodeReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "title": "SenEmailCodeReq",
+      "required": [
+        "email"
+      ]
+    },
+    "TopicCreateReq": {
+      "type": "object",
+      "properties": {
+        "cate_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 所属板块ID"
+        },
+        "title": {
+          "type": "string",
+          "description": " 标题"
+        },
+        "tags": {
+          "type": "string",
+          "description": " 标签"
+        },
+        "content": {
+          "type": "string",
+          "description": " 内容"
+        },
+        "md_content": {
+          "type": "string",
+          "description": " markdown内容"
+        }
+      },
+      "title": "TopicCreateReq",
+      "required": [
+        "cate_id",
+        "title",
+        "tags",
+        "content",
+        "md_content"
+      ]
+    },
+    "TopicDetailResply": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/CommonResply"
+        },
+        "data": {
+          "$ref": "#/definitions/TopicItem"
+        }
+      },
+      "title": "TopicDetailResply",
+      "required": [
+        "data"
+      ]
+    },
+    "TopicItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cate_id": {
+          "$ref": "#/definitions/uint",
+          "description": " 版块ID"
+        },
+        "user_id": {
+          "$ref": "#/definitions/uint",
+          "description": " 用户ID"
+        },
+        "title": {
+          "type": "string",
+          "description": " 标题"
+        },
+        "tags": {
+          "type": "string",
+          "description": " 标签"
+        },
+        "state": {
+          "$ref": "#/definitions/uint8",
+          "description": " 状态：0-草稿/1-发布"
+        },
+        "type": {
+          "$ref": "#/definitions/uint8",
+          "description": " 类型：0-默认/1-精华/2-置顶"
+        },
+        "content": {
+          "type": "string",
+          "description": " 内容"
+        },
+        "md_content": {
+          "type": "string",
+          "description": " markdown内容"
+        },
+        "is_delete": {
+          "$ref": "#/definitions/uint8",
+          "description": " 软删除"
+        },
+        "last_reply_at": {
+          "type": "string",
+          "description": " 最后回复时间"
+        },
+        "reply_id": {
+          "type": "string",
+          "description": " 最后回复者ID"
+        },
+        "view_count": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 浏览量"
+        },
+        "like_count": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 点赞量"
+        },
+        "comment_count": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 评论量"
+        },
+        "created_at": {
+          "type": "string",
+          "description": " 创建时间"
+        },
+        "updated_at": {
+          "type": "string",
+          "description": " 更新时间"
+        }
+      },
+      "title": "TopicItem",
+      "required": [
+        "id",
+        "cate_id",
+        "user_id",
+        "title",
+        "tags",
+        "state",
+        "type",
+        "content",
+        "md_content",
+        "is_delete",
+        "last_reply_at",
+        "reply_id",
+        "view_count",
+        "like_count",
+        "comment_count",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "TopicItemReq": {
+      "type": "object",
+      "properties": {
+        "topic_id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "TopicItemReq",
+      "required": [
+        "topic_id"
+      ]
+    },
+    "TopicListsReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "TopicListsReq"
+    },
+    "TopicListsResply": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/CommonResply"
+        },
+        "totalCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "currCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TopicItem"
+          }
+        }
+      },
+      "title": "TopicListsResply",
+      "required": [
+        "totalCount",
+        "currCount",
+        "data"
+      ]
+    },
+    "UserCheckinsReq": {
+      "type": "object",
+      "title": "UserCheckinsReq"
+    },
+    "UserIntegralItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/uint"
+        },
+        "user_id": {
+          "$ref": "#/definitions/uint"
+        },
+        "rewards": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        }
+      },
+      "title": "UserIntegralItem",
+      "required": [
+        "id",
+        "user_id",
+        "rewards",
+        "mode",
+        "created_at"
+      ]
+    },
+    "UserIntegralReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "UserIntegralReq"
+    },
+    "UserIntegralResply": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/CommonResply"
+        },
+        "totalCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "currCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserIntegralItem"
+          }
+        }
+      },
+      "title": "UserIntegralResply",
+      "required": [
+        "totalCount",
+        "currCount",
+        "data"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

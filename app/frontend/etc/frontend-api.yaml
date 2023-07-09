@@ -10,8 +10,8 @@ Log:
 SecretKey: oingtx47safd756s
 # mysql配置
 Mysql:
-  Host: 127.0.0.1:3346
-  User: mrico_sns
+  Host: 127.0.0.1:3306
+  User: root
   Pass: !!str 123456
   Data: mrico_sns
   Charset: utf8mb4
@@ -19,7 +19,7 @@ Mysql:
 
 # redis 配置
 Redis:
-  Addr: 127.0.0.1:6377
+  Addr: 127.0.0.1:6379
   Pass: !!str 123456
 
 Auth:
