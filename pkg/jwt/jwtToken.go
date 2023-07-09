@@ -5,8 +5,6 @@ import (
 	"time"
 )
 
-var nowDate = time.Now().Format("2006-01-02 15")
-
 func GenerateToken(mapClaims jwt.MapClaims, key string, Expire int64) (string, error) {
 	iat := time.Now().Unix()
 	mapClaims["exp"] = iat + Expire
