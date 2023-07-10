@@ -15,7 +15,7 @@
     "application/json"
   ],
   "paths": {
-    "/cate/lists": {
+    "v1/cate/lists": {
       "post": {
         "summary": "话题板块",
         "operationId": "CateList",
@@ -39,11 +39,95 @@
         ],
         "requestBody": {},
         "tags": [
-          "frontend-api"
+          "cate"
         ]
       }
     },
-    "/topic/create": {
+    "v1/common/login": {
+      "post": {
+        "summary": "用户登录",
+        "operationId": "Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LoginResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "common"
+        ]
+      }
+    },
+    "v1/common/register": {
+      "post": {
+        "summary": "用户注册",
+        "operationId": "Register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CommonResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "common"
+        ]
+      }
+    },
+    "v1/common/send-email-code": {
+      "post": {
+        "summary": "发送邮箱码",
+        "operationId": "SendEmailCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CommonResply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SenEmailCodeReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "common"
+        ]
+      }
+    },
+    "v1/topic/create": {
       "post": {
         "summary": "发布话题",
         "operationId": "TopicCreate",
@@ -67,11 +151,11 @@
         ],
         "requestBody": {},
         "tags": [
-          "frontend-api"
+          "topic"
         ]
       }
     },
-    "/topic/delete": {
+    "v1/topic/delete": {
       "delete": {
         "summary": "删除话题",
         "operationId": "TopicDelete",
@@ -95,11 +179,11 @@
         ],
         "requestBody": {},
         "tags": [
-          "frontend-api"
+          "topic"
         ]
       }
     },
-    "/topic/detail": {
+    "v1/topic/detail": {
       "post": {
         "summary": "话题详情",
         "operationId": "TopicDetail",
@@ -123,11 +207,11 @@
         ],
         "requestBody": {},
         "tags": [
-          "frontend-api"
+          "topic"
         ]
       }
     },
-    "/topic/lists": {
+    "v1/topic/lists": {
       "post": {
         "summary": "话题列表",
         "operationId": "TopicList",
@@ -151,11 +235,11 @@
         ],
         "requestBody": {},
         "tags": [
-          "frontend-api"
+          "topic"
         ]
       }
     },
-    "/user/checkins": {
+    "v1/user/checkins": {
       "post": {
         "summary": "用户签到",
         "operationId": "UserCheckins",
@@ -180,11 +264,11 @@
         ],
         "requestBody": {},
         "tags": [
-          "frontend-api"
+          "user"
         ]
       }
     },
-    "/user/integral": {
+    "v1/user/integral": {
       "post": {
         "summary": "积分列表",
         "operationId": "UserIntegral",
@@ -209,91 +293,7 @@
         ],
         "requestBody": {},
         "tags": [
-          "frontend-api"
-        ]
-      }
-    },
-    "common/login": {
-      "post": {
-        "summary": "用户登录",
-        "operationId": "Login",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/LoginResply"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/LoginReq"
-            }
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "frontend-api"
-        ]
-      }
-    },
-    "common/register": {
-      "post": {
-        "summary": "用户注册",
-        "operationId": "Register",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/CommonResply"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/RegisterReq"
-            }
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "frontend-api"
-        ]
-      }
-    },
-    "common/send-email-code": {
-      "post": {
-        "summary": "发送邮箱码",
-        "operationId": "SendEmailCode",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/CommonResply"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/SenEmailCodeReq"
-            }
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "frontend-api"
+          "user"
         ]
       }
     }

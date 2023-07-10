@@ -4,6 +4,10 @@ package handler
 import (
 	"net/http"
 
+	cate "github.com/jobhandsome/microSNS/app/frontend/internal/handler/cate"
+	common "github.com/jobhandsome/microSNS/app/frontend/internal/handler/common"
+	topic "github.com/jobhandsome/microSNS/app/frontend/internal/handler/topic"
+	user "github.com/jobhandsome/microSNS/app/frontend/internal/handler/user"
 	"github.com/jobhandsome/microSNS/app/frontend/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -14,21 +18,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/register",
-				Handler: RegisterHandler(serverCtx),
+				Path:    "/common/register",
+				Handler: common.RegisterHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/login",
-				Handler: LoginHandler(serverCtx),
+				Path:    "/common/login",
+				Handler: common.LoginHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/send-email-code",
-				Handler: SendEmailCodeHandler(serverCtx),
+				Path:    "/common/send-email-code",
+				Handler: common.SendEmailCodeHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/common"),
+		rest.WithPrefix("/v1"),
 	)
 
 	server.AddRoutes(
@@ -36,39 +40,54 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodPost,
 				Path:    "/user/checkins",
-				Handler: UserCheckinsHandler(serverCtx),
+				Handler: user.UserCheckinsHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/user/integral",
-				Handler: UserIntegralHandler(serverCtx),
+				Handler: user.UserIntegralHandler(serverCtx),
 			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/cate/lists",
-				Handler: CateListHandler(serverCtx),
-			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
 			{
 				Method:  http.MethodPost,
 				Path:    "/topic/lists",
-				Handler: TopicListHandler(serverCtx),
+				Handler: topic.TopicListHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/topic/detail",
-				Handler: TopicDetailHandler(serverCtx),
+				Handler: topic.TopicDetailHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/topic/create",
-				Handler: TopicCreateHandler(serverCtx),
+				Handler: topic.TopicCreateHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodDelete,
 				Path:    "/topic/delete",
-				Handler: TopicDeleteHandler(serverCtx),
+				Handler: topic.TopicDeleteHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/cate/lists",
+				Handler: cate.CateListHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/v1"),
 	)
 }

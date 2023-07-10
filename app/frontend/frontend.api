@@ -6,24 +6,27 @@ info (
 	version: "1.0.0"
 )
 @server(
-	prefix: common
+	prefix: v1
+	group: common
 )
 service frontend-api{
 	@doc "用户注册"
 	@handler Register
-	post /register (RegisterReq) returns (CommonResply)
+	post /common/register (RegisterReq) returns (CommonResply)
 	
 	@doc "用户登录"
 	@handler Login
-	post /login (LoginReq) returns (LoginResply)
+	post /common/login (LoginReq) returns (LoginResply)
 	
 	@doc "发送邮箱码"
 	@handler SendEmailCode
-	post /send-email-code (SenEmailCodeReq) returns (CommonResply)
+	post /common/send-email-code (SenEmailCodeReq) returns (CommonResply)
 }
 
 @server(
 	jwt: Auth
+	prefix: v1
+	group: user
 )
 
 service frontend-api{
@@ -34,12 +37,15 @@ service frontend-api{
 	@doc "积分列表"
 	@handler UserIntegral
 	post /user/integral (UserIntegralReq) returns (UserIntegralResply)
-	
-	@doc "话题板块"
-	@handler CateList
-	post /cate/lists (CateListsReq) returns (CateListsResply)
-	
-	// 话题
+}
+
+@server(
+	jwt: Auth
+	prefix: v1
+	group: topic
+)
+
+service frontend-api{
 	@doc "话题列表"
 	@handler TopicList
 	post /topic/lists (TopicListsReq) returns (TopicListsResply)
@@ -55,6 +61,18 @@ service frontend-api{
 	@doc "删除话题"
 	@handler TopicDelete
 	delete /topic/delete (TopicItemReq) returns (CommonResply)
+}
+
+@server(
+	jwt: Auth
+	prefix: v1
+	group: cate
+)
+
+service frontend-api{
+	@doc "话题板块"
+	@handler CateList
+	post /cate/lists (CateListsReq) returns (CateListsResply)
 }
 
 // 定义请求参数和返回值
