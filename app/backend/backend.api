@@ -1,0 +1,181 @@
+syntax = "v1"
+
+info (
+	title: "mirco_sns微社区后台"
+	author: "jobhandsome"
+	version: "1.0.0"
+)
+@server(
+	prefix: admin
+	group: common
+)
+service backend-api{
+	@doc "用户登录"
+	@handler Login
+	post /common/login (LoginReq) returns (LoginResply)
+}
+
+@server(
+	jwt: Auth
+	prefix: admin/user
+	group: user
+)
+service backend-api{
+	@doc "个人信息"
+	@handler UserInfo
+	post /info (InfoReq) returns (InfoResply)
+	
+	@doc "修改密码"
+	@handler EditPass
+	post /edit-pass (EditPassReq) returns(CommonResply)
+}
+
+@server(
+	jwt: Auth
+	prefix: admin/section
+	group: section
+)
+service backend-api{
+	@doc "板块信息"
+	@handler SectionList
+	post /lists (SectionListsReq) returns (SectionListsResply)
+}
+
+@server(
+	jwt: Auth
+	prefix: admin/topic
+	group: topic
+)
+service backend-api{
+	@doc "话题列表"
+	@handler TopicList
+	post /lists (TopicListsReq) returns (TopicListsResply)
+	
+	@doc "话题详情"
+	@handler TopicDetail
+	post /detail (TopicItemReq) returns (TopicDetailResply)
+	
+	@doc "发布话题"
+	@handler TopicCreate
+	post /create (TopicCreateReq) returns (CommonResply)
+	
+	@doc "删除话题"
+	@handler TopicDelete
+	delete /delete (TopicItemReq) returns (CommonResply)
+}
+
+// 定义请求参数和返回值
+type (
+	CommonResply {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+	}
+
+	LoginReq {
+		UserName string `json:"username"` // 用户邮箱
+		PassWord string `json:"password"` // 用户密码
+	}
+
+	LoginResply {
+		CommonResply
+		Token string `json:"token"`
+	}
+
+	InfoReq struct{}
+
+	InfoResply {
+		CommonResply
+		Data []SectionItem `json:"data"`
+	}
+
+	InfoItem {
+		Id        uint32 `json:"id"`
+		Name      string `json:"name"`       // 账户名
+		Nicks     string `json:"nicks"`      // 昵称
+		Pass      string `json:"pass"`       // 密码
+		Ip        string `json:"ip"`         // IP地址
+		State     uint8  `json:"state"`      // 状态：0-冻结/1-正常
+		CreatedAt string `json:"created_at"` // 创建时间
+		UpdatedAt string `json:"updated_at"` // 更新时间
+	}
+
+	EditPassReq {
+		PassWord     string `json:"password"`
+		OrldPassWord string `json:"old_password"`
+	}
+
+	SectionListsReq {
+		Page     int `json:"page,optional"`
+		PageSize int `json:"pageSize,optional"`
+	}
+
+	SectionListsResply {
+		CommonResply
+		TotalCount int64         `json:"totalCount"`
+		CurrCount  int           `json:"currCount"`
+		Data       []SectionItem `json:"data"`
+	}
+
+	SectionItem {
+		Id        uint32 `json:"id"`
+		Name      string `json:"name"`       // 名称
+		Alias     string `json:"alias"`      // 别名
+		Desc      string `json:"desc"`       // 介绍
+		Pid       uint8  `json:"pid"`        // 上级节点
+		Level     uint8  `json:"level"`      // 层级：0一级(默认)
+		Icons     string `json:"icons"`      // 图标
+		Sorts     uint32 `json:"sorts"`      // 排序
+		State     uint8  `json:"state"`      // 状态：0-关闭/1-开启
+		IsDelete  uint8  `json:"is_delete"`  // 软删除
+		CreatedAt string `json:"created_at"` // 创建时间
+		UpdatedAt string `json:"updated_at"` // 更新时间
+	}
+
+	TopicCreateReq {
+		CateId    uint32 `json:"cate_id"`    // 所属板块ID
+		Title     string `json:"title"`      // 标题
+		Tags      string `json:"tags"`       // 标签
+		Content   string `json:"content"`    // 内容
+		MdContent string `json:"md_content"` // markdown内容
+	}
+
+	TopicListsReq {
+		Page     int `json:"page,optional"`
+		PageSize int `json:"pageSize,optional"`
+	}
+	TopicListsResply {
+		CommonResply
+		TotalCount int64       `json:"totalCount"`
+		CurrCount  int         `json:"currCount"`
+		Data       []TopicItem `json:"data"`
+	}
+
+	TopicDetailResply {
+		CommonResply
+		Data TopicItem `json:"data"`
+	}
+
+	TopicItemReq {
+		TopicId uint32 `json:"topic_id"`
+	}
+
+	TopicItem {
+		Id           uint32 `json:"id"`
+		CateId       uint   `json:"cate_id"`       // 版块ID
+		UserId       uint   `json:"user_id"`       // 用户ID
+		Title        string `json:"title"`         // 标题
+		Tags         string `json:"tags"`          // 标签
+		State        uint8  `json:"state"`         // 状态：0-草稿/1-发布
+		Type         uint8  `json:"type"`          // 类型：0-默认/1-精华/2-置顶
+		Content      string `json:"content"`       // 内容
+		MdContent    string `json:"md_content"`    // markdown内容
+		IsDelete     uint8  `json:"is_delete"`     // 软删除
+		LastReplyAt  string `json:"last_reply_at"` // 最后回复时间
+		ReplyId      string `json:"reply_id"`      // 最后回复者ID
+		ViewCount    uint64 `json:"view_count"`    // 浏览量
+		LikeCount    uint64 `json:"like_count"`    // 点赞量
+		CommentCount uint64 `json:"comment_count"` // 评论量
+		CreatedAt    string `json:"created_at"`    // 创建时间
+		UpdatedAt    string `json:"updated_at"`    // 更新时间
+	}
+)

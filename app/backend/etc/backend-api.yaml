@@ -1,0 +1,28 @@
+Name: backend-api
+Host: 0.0.0.0
+Port: 9999
+
+# log日志配置
+Log:
+  Mode: file # [console,file,volume]
+  Level: info
+  Compress: true
+
+SecretKey: oingtx47safd756s
+# mysql配置
+Mysql:
+  Host: 127.0.0.1:3306
+  User: root
+  Pass: !!str 123456
+  Data: mrico_sns
+  Charset: utf8mb4
+  Debug: true
+
+# redis 配置
+Redis:
+  Addr: 127.0.0.1:6379
+  Pass: !!str 123456
+
+Auth:
+  AccessSecret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+  AccessExpire: 64800
